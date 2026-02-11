@@ -1,6 +1,8 @@
 Recordemos que el principal axioma del cálculo $\lambda$ es:
 
-$$(\lambda x.M )N = M [x := N ] \quad \forall \, M,N \in \Lambda$$
+$$
+(\lambda x.M )N = M [x := N ] \quad \forall \, M,N \in \Lambda
+$$
 
 Sin embargo, una computadora no puede identificar los términos $\alpha$-equivalentes tal y como lo hacemos con nuestra mente, se necesita del siguiente axioma en su lugar.
 $$
