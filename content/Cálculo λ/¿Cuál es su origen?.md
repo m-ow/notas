@@ -11,7 +11,7 @@ Hilbert lo planteó como un reto: el problema de la decisión (Entscheidungsprob
 
 Sin embargo, en 1936 de manera independiente, Alonzo Church y Alan Turing rompieron los sueños e ilusiones del pobre Leibniz (y de Hilbert). Para ello, primero tuvieron que formalizar la noción intuitiva que había detrás de ese dichoso método. El cálculo lambda por un lado y las maquinas de Turing por el otro. Luego demostraron que había problemas que no se podían resolver con sus respectivos formalismos (Halting problem). Además, Turing probó que sus modelos eran equivalentes.
 
-Hoy en día, nuestras computadoras siguen la arquitectura de Von Neumann, la cual está basada en el concepto de la máquina de Turing, así como también los lenguajes de programación imperativos y los ensambladores, están basados en la forma en que trabaja una máquina de Turing: mediante una secuencia de instrucciones. Mientras que los lenguajes de programación funcionales están basados en el cálculo lambda.
+Hoy en día, nuestras computadoras siguen la arquitectura de Von Neumann, la cual está basada en el concepto de la máquina de Turing. Además, los lenguajes de programación imperativos y los ensambladores están basados en la forma en que trabaja una máquina de Turing: mediante una secuencia de instrucciones. Mientras que los lenguajes de programación funcionales están basados en el cálculo lambda.
 
 ---
 ### Referencia
