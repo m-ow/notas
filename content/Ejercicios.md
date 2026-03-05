@@ -12,14 +12,14 @@ constante a b = a
 ```
 Ejercicio 3: Modus Ponens $(A \implies B) \implies A \implies B$
 ```Haskell
-modusPonens :: (a -> b) -> a -> b 
+modusPonens :: (a -> b) -> a -> b
 modusPonens f x = f x
 ```
 Ejercicio 4: Silogismo Hipotético $(A \implies B) \implies (B \implies C) \implies (A \implies C)$
 ```Haskell
 transitividad :: (a -> b) -> (b -> c) -> (a -> c)
 transitividad f g x = g (f x)
--- También válido usando composición: 
+-- También válido usando composición:
 -- transitividad f g = g . f
 ```
 Ejercicio 5: Conmutatividad de la Conjunción $A \land B \implies B \land A$****
@@ -40,12 +40,12 @@ exFalso x = case x of {}
 ¿Qué pasa con el Tercio Excluso ($A \lor \neg A$) o la Doble Negación?
 ```Haskell
 -- dobleNeg :: Not (Not a) -> a
--- dobleNeg = ??? 
+-- dobleNeg = ???
 
--- tercioExcluso :: Either a (Not a) 
+-- tercioExcluso :: Either a (Not a)
 -- tercioExcluso = ???
 ```
-Nos quedaremos atrapados. ¿Por qué? Porque lenguajes como Haskell (y asesores de pruebas como Coq o Lean) operan bajo lógica _constructivista_. Si afirmas que algo existe o es verdadero, tienes que construir el algoritmo para obtenerlo. 
+Nos quedaremos atrapados. ¿Por qué? Porque lenguajes como Haskell (y asesores de pruebas como Rocq o LEAN) operan bajo lógica _constructivista_. Si afirmas que algo existe o es verdadero, tienes que construir el algoritmo para obtenerlo.
 ### Resumen
 
 | Proposición            | Tipo         |
