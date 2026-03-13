@@ -5,6 +5,7 @@ Las mónadas deben cumplir tres leyes: identidad izquierda, identidad derecha y 
 | Identidad izquierda | `return a >>= f = f a`                      | $\eta (a) \star f = f(a)$                                 |
 | Identidad derecha   | `m >>= return = m`                          | $m \star \eta = m$                                        |
 | Asociatividad       | `(m >>= f) >>= g = m >>= (\x -> f x >>= g)` | $(m \star f) \star g = m \star (\lambda x. f(x) \star g)$ |
+
 Una mónada es las tres leyes anteriores y nada más. Y... si eso es todo lo que es una mónada, entonces seguramente muchas cosas forman una mónada, ¿no? Sí, efectivamente, en particular, el tipo lista forma una mónada:
 ```Haskell
 instance Monada [] where
