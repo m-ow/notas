@@ -50,4 +50,6 @@ dividir x y = x `div` y
 
 Al escribir `{v:Int | v /= 0}`, estamos diciendo que el dominio real de este segundo argumento no es todo `Int`. Es el subconjunto de los enteros que cumplen la condición de ser diferentes de cero. 
 
+Al restringir el dominio explícitamente en el tipo, nuestra función vuelve a ser una función total (es válida para todos los elementos).
+
 Ahora, si alguien intenta escribir `dividir 9 0` en un archivo verificado por Liquid Haskell, el código será rechazado en tiempo de compilación, no en tiempo de ejecución.
