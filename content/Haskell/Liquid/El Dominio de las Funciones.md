@@ -53,3 +53,9 @@ Al escribir `{v:Int | v /= 0}`, estamos diciendo que el dominio real de este seg
 Al restringir el dominio explícitamente en el tipo, nuestra función vuelve a ser una función total (es válida para todos los elementos).
 
 Ahora, si alguien intenta escribir `dividir 9 0` en un archivo verificado por Liquid Haskell, el código será rechazado en tiempo de compilación, no en tiempo de ejecución.
+
+Finalmente, si la sintaxis `{v:Int | v /= 0}` nos resulta familiar, es porque, bajo la correspondencia Curry-Howard, un tipo de refinamiento representa la formalización de un **conjunto por comprensión**. 
+
+$$
+\{ v \in \mathbb{Z} \, | \, v \neq 0 \}
+$$
