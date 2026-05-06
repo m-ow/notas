@@ -17,13 +17,13 @@ ghci> 9 `div` 0
 
 En matemáticas, si tienes una función $f:A \to B$, el dominio (el conjunto $A$) es el conjunto de todos los valores de entrada válidos para los cuales la función está definida y produce un resultado válido en el codominio ($B$).
 
-Por ejemplo, para la función matemática de la división $f(x,y) = \frac{x}{y}$:
+Por ejemplo, para la función matemática de la división $f(x) = \frac{9}{x}$:
 
 - El dominio no son "todos los números reales".
 
 - El dominio es $\mathbb{R}∖ \{0\}$ (Todos los números reales, excluyendo el cero).
 
-- Si evaluamos $f(9,0)$, la función simplemente "no tiene sentido" matemático. Está fuera de su dominio.
+- Si evaluamos $f(0)$, la función simplemente "no tiene sentido" matemático. Está fuera de su dominio.
 
 ### El Problema del Dominio en Haskell
 Cuando escribimos la siguiente función:
