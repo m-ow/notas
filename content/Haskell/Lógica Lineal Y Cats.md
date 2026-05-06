@@ -28,7 +28,7 @@ Hasta el momento, ya hemos estudiado la lógica y el cálculo $\lambda$ lineal. 
 
 La respuesta es un rotundo sí. Las categorías cartesianas cerradas corresponden a la lógica intuicionista, mientras que las categorías monoidales simétricas cerradas corresponden a la lógica lineal.
 
-Como ya sabemos, la peculiaridad principal de la lógica lineal es que no nos permite duplicar ni descartar variables  En programación, esto nos ayuda a evitar errores; por ejemplo, facilita el seguimiento de la asignación y liberación de bloques de memoria.
+Como ya sabemos, la peculiaridad principal de la lógica lineal es que no nos permite duplicar ni descartar variables. En programación, esto nos ayuda a evitar errores; por ejemplo, facilita el seguimiento de la asignación y liberación de bloques de memoria.
 
 Sin embargo, para mí, esto no es lo más interesante. La mayor ventaja de abandonar
 las categorías cartesianas cerradas y abrazar las monoidales simétricas, junto con la lógica lineal, es que la correspondencia Curry-Howard se extiende nuevamente: a la Física y a la Topología.
