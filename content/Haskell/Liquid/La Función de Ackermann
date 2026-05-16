@@ -1,0 +1,177 @@
+## Intuición
+
+**Adición**
+
+$$ n + 3 = n + 1 + 1 + 1 $$
+
+**Multiplicación**
+
+$$ n \times 3 = n + n + n $$
+
+**Exponenciación**
+
+$$ n \times 3 = n \times n \times n $$
+
+**Tetración**
+
+$$ n \uparrow \uparrow 3 = n^{n^n} $$
+
+La siguiente operación de la secuencia, denominada pentación, corresponde a una tetración repetida; a ella le sigue otra operación más (hexación), que corresponde a una pentación repetida, y así sucesivamente.
+
+La función de Ackermann, denotada como $A(n)$, es el resultado que se obtiene al subir un peldaño en esta escalera de operaciones:
+
+$$A(1)=1+1$$ 
+
+$$A(2)=2×2$$ 
+
+$$A(3)=3×3$$
+
+$$A(4)= 4 \uparrow \uparrow 4 = 4^{4^{4^4}}$$
+
+Y así sucesivamente. El número de dígitos de $A(4)$ es aproximadamente igual a 1 quinquagintillón (Un 1 seguido de 153 ceros, alrededor del número de 
+átomos en el universo, elevado al cuadrado).
+
+## Terminación
+
+```Haskell
+{-@ factorial :: Nat -> Nat @-}
+factorial :: Int -> Int
+factorial 0 = 1
+factorial n = n * factorial (n - 1)
+```
+
+¿Cómo sabes que una función termina?
+Por ejemplo, es fácil ver que `factorial 0` termina, pero
+¿y `factorial 42`? Es obvio que no ejecutaste este programa en tu mente para ver si terminaba, entonces
+¿cómo lo hiciste?
+
+## Inducción
+
+Sea `bar` una función cualquiera, supongamos que 
+1. `bar 0` termina
+2. `bar n + 1` termina
+
+¿`bar 12345678` termina?
+
+No necesitamos conocer la implementación de `bar` para saber que sí.
+Podemos utilizar la hipótesis número 2 para concluir que `bar 1` se detiene, 
+y luego volver a utilizarla para concluir que `bar 2`  se detiene, 
+y así sucesivamente, hasta llegar a `bar 12345678`.
+
+Así pues, la inducción es una forma de demostrarnos a nosotros mismos 
+que un programa se detiene. Pero, ¿cómo se lo demostramos a una computadora? 
+
+Liquid Haskell (a diferencia de Haskell) solo nos permite
+escribir funciones que se detienen, así pues, el código que acabamos de escribir
+*es* la demostración de que `factorial` termina.
+
+---
+
+Ahora si, pasemos a la función de Ackermann escrita en Haskell. 
+
+```Haskell
+{-@ ack :: Nat -> Nat -> Nat @-}
+ack :: Int -> Int -> Int
+ack 0 n = n + 1
+ack m 0 = ack (m - 1) 1
+ack m n = ack (m - 1) (ack m (n - 1))
+```
+
+Ejemplo:
+```Haskell
+ack 1 1 = ack 0 (ack 1 0)
+        = ack 0 (ack 0 1)
+        = ack 0 2 
+        = 3 
+```
+Así, tenemos que `ack 1 1` termina. ¿`ack 4 2` termina?
+Sí, pero no lo intenten ejecutar a mano, morirán antes de que acaben. 
+
+Al intentar compilar este programa con Liquid Haskell 
+nos da un error ¿Por qué? ¿Eso significa que la función de Ackermann NO termina?
+
+En realidad sí que termina, pero el compilador ha fallado al intentar
+demostrar su terminación, tenemos que ayudarle un poco, pero antes de convencer
+a Liquid Haskell de que la función termina, hay que convencernos a nosotros mismos primero. 
+
+Organicemos la función `ack m,n` en una cuadrícula.
+- Las filas representan el primer número (`m`).
+- Las columnas representan el segundo número (`n`).
+
+Vamos a calcular las primeras celdas aplicando nuestras tres ecuaciones:
+
+1. `ack 0 n = n + 1`: Fila `0`, columna `n`. El valor de esa celda corresponde a simplemente a 1 más el número de columna.
+
+| `ack m n` | Columna 0 | Columna 1 | Columna 2 | Columna 3 | Columna 4 |
+|-----------|-----------|-----------|-----------|-----------|-----------|
+| Fila 0    | 1         | 2         | 3         | 4         | 5         |
+| Fila 1    |           |           |           |           |           |
+| Fila 2    |           |           |           |           |           |
+
+2. `ack m 0 = ack (m - 1) 1`: `m - 1` significa subir a la fila de arriba, mientras que el segundo argumento `1` significa ir a la columna 1. El valor en esa celda será `ack m 0`. 
+
+| `ack m n` | Columna 0 | Columna 1 | Columna 2 | Columna 3 | Columna 4 |
+|-----------|-----------|-----------|-----------|-----------|-----------|
+| Fila 0    | 1         | 2         | 3         | 4         | 5         |
+| Fila 1    | 2         |           |           |           |           |
+| Fila 2    |           |           |           |           |           |
+
+
+3. `ack m n = ack (m - 1) (ack m (n - 1))`. 
+   - El paso interno `(ack m (n - 1))`: Te quedas en la misma fila `m`, pero miras la columna `n - 1`, es decir, el valor de la celda que está inmediatamente a tu izquierda. Supongamos que esa celda ya tiene el valor `X`.
+   - El paso externo `(ack (m - 1) X)`: `m - 1` significa subir a la fila de arriba, y busca la celda ubicada en la columna `X`. 
+   - En pocas palabras, miras el valor de la celda a tu izquierda y usas ese número para buscar en la fila superior. 
+
+| `ack m n` | Columna 0 | Columna 1 | Columna 2 | Columna 3 | Columna 4 |
+|-----------|-----------|-----------|-----------|-----------|-----------|
+| Fila 0    | 1         | 2         | 3         | 4         | 5         |
+| Fila 1    | 2         | 3         |           |           |           |
+| Fila 2    |           |           |           |           |           |
+
+
+Llena la celda `ack 1 2`
+
+| `ack m n` | Columna 0 | Columna 1 | Columna 2 | Columna 3 | Columna 4 |
+|-----------|-----------|-----------|-----------|-----------|-----------|
+| Fila 0    | 1         | 2         | 3         | 4         | 5         |
+| Fila 1    | 2         | 3         | 4         |           |           |
+| Fila 2    |           |           |           |           |           |
+
+
+Llena la celda `ack 1 3`
+
+| `ack m n` | Columna 0 | Columna 1 | Columna 2 | Columna 3 | Columna 4 |
+|-----------|-----------|-----------|-----------|-----------|-----------|
+| Fila 0    | 1         | 2         | 3         | 4         | 5         |
+| Fila 1    | 2         | 3         | 4         | 5         |           |
+| Fila 2    |           |           |           |           |           |
+
+Llena la celda `ack 2 1`
+
+Para ello necesitamos la celda `ack 2 0`
+
+| ack m n | Columna 0 | Columna 1 | Columna 2 | Columna 3 | Columna 4 |
+|---------|-----------|-----------|-----------|-----------|-----------|
+| Fila 0  | 1         | 2         | 3         | 4         | 5         |
+| Fila 1  | 2         | 3         | 4         | 5         | 6         |
+| Fila 2  | 3         |           |           |           |           |
+
+Ahora si
+
+| ack m n | Columna 0 | Columna 1 | Columna 2 | Columna 3 | Columna 4 |
+|---------|-----------|-----------|-----------|-----------|-----------|
+| Fila 0  | 1         | 2         | 3         | 4         | 5         |
+| Fila 1  | 2         | 3         | 4         | 5         | 6         |
+| Fila 2  | 3         | 5         |           |           |           |
+
+¿Y si en vez de columnas y filas, tenemos vertices y aristas?
+
+Para cualquier recuadro siempre puedes encontrar una flecha que te lleve al caso base.
+
+```Haskell
+{-@ ack :: m:Nat -> n:Nat -> Nat / [m, n] @-}
+ack :: Int -> Int -> Int
+ack 0 n = n + 1
+ack m 0 = ack (m - 1) 1
+ack m n = ack (m - 1) (ack m (n - 1))
+```
